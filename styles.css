@@ -1,0 +1,412 @@
+/* Custom styles for the Smart Parking System */
+
+/* Base styles */
+html, body {
+    background-color: #000000;
+    color: #f3f4f6;
+}
+
+body {
+    background-color: #0f172a;
+    background-image: linear-gradient(to bottom right, #0f172a, #1e293b, #000000);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Font families */
+.font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+}
+
+@keyframes carEnter {
+    0% {
+        opacity: 0.8;
+        transform: translateY(-100%) rotate(0deg);
+    }
+    100% {
+        opacity: 0.8;
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+@keyframes carLeave {
+    0% {
+        opacity: 0.8;
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100%) rotate(0deg);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Status indicators */
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.status-indicator::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-indicator.available {
+    background-color: #EF4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.status-indicator.available::before {
+    background-color: #EF4444;
+    opacity: 0.4;
+}
+
+.status-indicator.occupied {
+    background-color: #10B981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.status-indicator.occupied::before {
+    background-color: #10B981;
+    opacity: 0.4;
+}
+
+.status-indicator.unknown {
+    background-color: #6B7280;
+    box-shadow: 0 0 10px rgba(107, 114, 128, 0.5);
+}
+
+.status-indicator.unknown::before {
+    background-color: #6B7280;
+    opacity: 0.4;
+}
+
+/* Larger status indicators for stats */
+.status-indicator-large {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.status-indicator-large::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-indicator-large.available {
+    background-color: #EF4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+.status-indicator-large.available::before {
+    background-color: #EF4444;
+    opacity: 0.4;
+}
+
+.status-indicator-large.occupied {
+    background-color: #10B981;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+
+.status-indicator-large.occupied::before {
+    background-color: #10B981;
+    opacity: 0.4;
+}
+
+/* Notification */
+.notification {
+    animation: fadeIn 0.3s ease-out;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Parking container */
+.parking-lot-container {
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Parking Grid */
+.parking-grid {
+    width: 100%;
+}
+
+/* Parking spot cards */
+.parking-spot-card {
+    perspective: 1000px;
+}
+
+.parking-spot {
+    height: 180px;
+    border-radius: 1rem;
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Small parking spot for 9x9 grid */
+.parking-spot-small {
+    height: 80px;
+    border-radius: 0.5rem;
+}
+
+.parking-spot::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    z-index: -1;
+}
+
+.parking-spot:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.parking-spot-small:hover {
+    transform: translateY(-2px) scale(1.01);
+}
+
+.spot-label {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    position: absolute;
+    top: 20px;
+    letter-spacing: 1px;
+}
+
+.parking-spot-small .spot-label {
+    font-size: 0.9rem;
+    top: 5px;
+}
+
+/* Car SVG styles */
+.car-svg {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    fill: white;
+    opacity: 0;
+    z-index: 2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.parking-spot-small .car-svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Available spot styling */
+.parking-spot.available {
+    background: linear-gradient(145deg, #dc2626, #ef4444);
+    border: 2px solid #b91c1c;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.parking-spot.available .car-svg {
+    animation: carLeave 0.5s ease forwards;
+}
+
+/* Occupied spot styling */
+.parking-spot.occupied {
+    background: linear-gradient(145deg, #0d9668, #10B981);
+    border: 2px solid #059669;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.parking-spot.occupied .car-svg {
+    animation: carEnter 0.5s ease forwards;
+}
+
+/* Unknown spot styling (connecting) */
+.parking-spot.unknown {
+    background: linear-gradient(145deg, #4b5563, #6b7280);
+    border: 2px solid #374151;
+    box-shadow: 0 0 20px rgba(107, 114, 128, 0.3);
+    animation: glow 2s infinite;
+}
+
+/* Static spots (always available) */
+.static-spot {
+    background: linear-gradient(145deg, #dc2626, #ef4444);
+    border: 2px solid #b91c1c;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+/* API-connected spots */
+.api-connected {
+    border: 2px solid #4f46e5;
+}
+
+/* Feature icons */
+.feature-icon {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Card hover effect */
+.feature-card {
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress bar */
+.progress-bar-bg {
+    background: #1e293b;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar-fill {
+    transition: width 1s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .parking-spot {
+        height: 150px;
+    }
+    
+    .parking-spot-small {
+        height: 70px;
+    }
+    
+    .spot-label {
+        font-size: 1.2rem;
+    }
+
+    .parking-spot-small .spot-label {
+        font-size: 0.8rem;
+    }
+
+    .car-svg {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .parking-spot-small .car-svg {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 640px) {
+    .parking-spot {
+        height: 120px;
+    }
+    
+    .parking-spot-small {
+        height: 50px;
+    }
+    
+    .spot-label {
+        font-size: 1rem;
+        top: 15px;
+    }
+    
+    .parking-spot-small .spot-label {
+        font-size: 0.7rem;
+        top: 3px;
+    }
+
+    .car-svg {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .parking-spot-small .car-svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .status-indicator-large {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(17, 24, 39, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.8);
+} 
